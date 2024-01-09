@@ -4,6 +4,7 @@ import Layout from "@layouts/Layout.astro";
 import Container from "@components/container.astro";
 import { newtClient } from '@lib/newt'
 import type { Article } from '@lib/newt'
+import dayjs from 'dayjs';
 
 export const getStaticPaths = async () => {
   const { items: articles } = await newtClient.getContents<Article>({
@@ -19,6 +20,9 @@ export const getStaticPaths = async () => {
 // Get the entry directly from the prop on render
 const { article } = Astro.props;
 // const { Content } = await article.render();
+
+const object = new Date(article._sys.raw.publishedAt)
+const datetime = dayjs(object).format('YYYY年MM月DD日')
 ---
 
 <Layout title={article.title}>
@@ -40,8 +44,8 @@ const { article } = Astro.props;
       <div class="flex gap-2 mt-3 items-center flex-wrap md:flex-nowrap">
         <time
           class="text-gray-400"
-          datetime={article._sys.raw.publishedAt}>
-          {article._sys.raw.publishedAt}
+          datetime={datetime}>
+          {datetime}
         </time>
         <span class="text-gray-400 hidden md:block">•</span>
         {
