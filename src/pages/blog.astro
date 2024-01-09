@@ -6,6 +6,7 @@ import Container from "@components/container.astro";
 import Sectionhead from "@components/sectionhead.astro";
 import { newtClient } from '@lib/newt'
 import type { Article } from '@lib/newt'
+import dayjs from 'dayjs';
 
 // Filter blog entries with 'draft: false' & date before current date
 const publishedBlogEntries = await getCollection("blog", ({ data }) => {
@@ -36,6 +37,8 @@ const { items: articles } = await newtClient.getContents<Article>({
       <ul class="grid gap-16 max-w-4xl mx-auto">
         {
           articles.map((article, index) => {
+            const object = new Date(article._sys.raw.publishedAt)
+            const iso = object.toISOString()
             return (
             <li>
               <a href={`/blog/${article.slug}`}>
@@ -67,8 +70,8 @@ const { items: articles } = await newtClient.getContents<Article>({
                     <div class="flex gap-2 mt-3">
                       <time
                         class="text-gray-400"
-                        datetime={article._sys.raw.publishedAt}>
-                        {article._sys.raw.publishedAt}
+                        datetime={dayjs(object).format('YYYY年MM月DD日')}>
+                        {dayjs(object).format('YYYY年MM月DD日')}
                       </time>
                     </div>
                   </div>
