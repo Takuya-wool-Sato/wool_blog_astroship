@@ -18,11 +18,13 @@ export function GET(context) {
     // コンテンツコレクションやglobインポートを利用した例については「`items`の生成」セクションをご覧ください
     items: articles.map(post => ({
       title: post.title,
-      description: post.title,
+      description: post.description,
       content: post.body,
       pubDate: post._sys.raw.publishedAt,
-      link: ``,
-      customData: `${post.tags.map(tag => `<category>${tag.name}</category>`)}`
+      link: post.slug,
+      customData: `${post.tags.map(
+        tag => `<category>${tag.name}</category>`
+      )}<image>${post.coverImage.src}</image>`
     })),
     // (任意) カスタムXMLを挿入
     customData: `<language>en-us</language>`
