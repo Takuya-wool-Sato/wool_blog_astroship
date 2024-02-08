@@ -21,7 +21,7 @@ export function GET(context) {
       description: post.description,
       content: post.body,
       pubDate: post._sys.raw.publishedAt,
-      link: post.slug,
+      link: `/blog/${post.slug}`,
       customData: `${post.tags.map(
         tag => `<category>${tag.name}</category>`
       )}<image>${post.coverImage.src}</image>`
